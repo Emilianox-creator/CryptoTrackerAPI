@@ -1,0 +1,26 @@
+node_modules/
+.env
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build and coverage output
+dist/
+build/
+coverage/
+
+# Local environment files (keep templates trackable)
+.env.*
+!.env.example
+
+# Editor and operating system files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

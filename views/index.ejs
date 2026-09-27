@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cripto Tracker - Dashboard</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+
+    <!-- Header / Barra Superior -->
+    <header class="navbar">
+        <div class="logo">
+            <h1>CriptoTracker</h1>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container">
+        
+        <!-- Sección de Tarjetas Destacadas (Resumen) -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Bitcoin (BTC)</h3>
+                <p class="price" id="btcPrice">$<%= btc.usd.toLocaleString('en-US') %> USD</p>
+                <% if (btc.usd_24h_change < 0) { %>
+                    <span class="change negative"><%= btc.usd_24h_change.toFixed(5) %>%</span>
+                <% } else { %>
+                <span class="change positive">+<%= btc.usd_24h_change.toFixed(5) %>%</span>
+                <% } %>
+            </div>
+            <div class="stat-card">
+                <h3>Ethereum (ETH)</h3>
+                <p class="price" id="ethPrice">$<%= eth.usd.toLocaleString('en-US') %> USD</p>
+                <% if (eth.usd_24h_change < 0) { %>
+                    <span class="change negative"><%= eth.usd_24h_change.toFixed(5) %>%</span>
+                <% } else { %>
+                <span class="change positive">+<%= eth.usd_24h_change.toFixed(5) %>%</span>
+                <% } %>
+            </div>
+            <div class="stat-card">
+                <h3>Mercado Global</h3>
+                <p class="price" id="globalCap">$<%= global.total_market_cap.usd.toLocaleString('en-US') %> USD</p>
+                <% if (global.market_cap_change_percentage_24h_usd < 0) { %>
+                    <span class="change negative"><%= global.market_cap_change_percentage_24h_usd.toFixed(5) %>%</span>
+                <% } else { %>
+                <span class="change positive">+<%= global.market_cap_change_percentage_24h_usd.toFixed(5) %>%</span>
+                <% } %>
+            </div>
+        </section>
+
+        <!-- Tabla Principal de Monedas -->
+        <section class="table-container">
+            <h2>Top Criptomonedas</h2>
+            <table class="crypto-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Moneda</th>
+                        <th>Precio</th>
+                        <th>24h %</th>
+                        <th>Cap. de Mercado</th>
+                    </tr>
+                </thead>
+                <tbody id="cryptoTableBody">
+                    <!-- Filas dinámicas generadas desde JS o EJS -->
+                     <% coins.forEach((coin,index) => { %>
+                        <tr>
+                            <td><%= index+1 %></td>
+                            <td class="coin-info">
+                                <span class="coin-symbol"> <%=coin.symbol%> </span> <%= coin.name %>
+                            </td>
+                            <td>$<%= coin.current_price.toLocaleString('en-US') %> USD</td>
+
+                            <% if (coin.price_change_percentage_24h < 0) { %>
+                                <td class="change negative"><%= coin.price_change_percentage_24h  %>%</td>
+                            <% } else { %>
+                               <td class="change positive">+<%= coin.price_change_percentage_24h %>%</td>
+                            <% } %>
+
+                            <td>$<%=coin.market_cap.toLocaleString('en-US')%></td>
+                        </tr>
+                     <%}); %>
+                   
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Datos provistos por CoinGecko API</p>
+    </footer>
+
+</body>
+</html>
